@@ -313,3 +313,15 @@ footer {
     font-size: 1.2rem;
 }
 
+.team-member img {
+    border-radius: 50%;
+    /* Makes the image round */
+    width: 120px;
+    /* Ensure the width is the same as the height */
+    height: 120px;
+    /* Ensure the height is the same as the width */
+    object-fit: cover;
+    /* Ensures the image covers the area and maintains aspect ratio */
+    margin-bottom: 10px;
+    /* Adds some space below the image */
+}
