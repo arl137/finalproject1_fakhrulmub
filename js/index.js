@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadTodos() {
     const todoList = document.getElementById('todoList');
-    todoList.innerHTML = ''; // Clear the list before loading
+    todoList.innerHTML = '';
     const todos = JSON.parse(localStorage.getItem('todos')) || [];
     todos.forEach((todo, index) => {
         const todoItem = createTodoItem(todo, index);
@@ -13,21 +13,29 @@ function loadTodos() {
 }
 
 function addTodo() {
-    const newTodo = document.getElementById('newTodo').value.trim();
-    if (newTodo === '') return;
+    const newTodoText = document.getElementById('newTodo').value.trim();
+    if (newTodoText === '') return;
 
     const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    const newTodo = { text: newTodoText, completed: false };
     todos.push(newTodo);
     localStorage.setItem('todos', JSON.stringify(todos));
-    document.getElementById('newTodo').value = ''; // Clear the input field
-    loadTodos(); // Refresh the list
+    document.getElementById('newTodo').value = '';
+    loadTodos();
 }
 
 function deleteTodo(index) {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    todos.splice(index, 1);
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    todos = todos.filter((_, i) => i !== index);
     localStorage.setItem('todos', JSON.stringify(todos));
-    loadTodos(); // Refresh the list
+    loadTodos();
+}
+
+function toggleComplete(index) {
+    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    todos[index].completed = !todos[index].completed;
+    localStorage.setItem('todos', JSON.stringify(todos));
+    loadTodos();
 }
 
 function createTodoItem(todo, index) {
@@ -37,9 +45,14 @@ function createTodoItem(todo, index) {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.className = 'form-check-input me-2';
+    checkbox.checked = todo.completed;
+    checkbox.onclick = function() {
+        toggleComplete(index);
+    };
 
     const todoText = document.createElement('span');
-    todoText.textContent = todo;
+    todoText.textContent = todo.text;
+    todoText.style.textDecoration = todo.completed ? 'line-through' : 'none';
 
     const deleteButton = document.createElement('button');
     deleteButton.className = 'btn btn-danger btn-sm';
