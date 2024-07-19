@@ -325,3 +325,26 @@ footer {
     margin-bottom: 10px;
     /* Adds some space below the image */
 }
+
+.skill-bar {
+    background: #ddd;
+    border-radius: 20px;
+    margin: 15px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-bar-fill {
+    background: #4caf50;
+    display: block;
+    height: 30px;
+    position: relative;
+}
+
+.skill-bar-title {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    padding: 5px 10px;
+    color: #fff;
+}
